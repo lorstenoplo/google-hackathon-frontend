@@ -231,8 +231,6 @@ export default function PDFMarkdownViewer() {
             onDrop={handleDrop}
             onDragOver={preventDefault}
             onDragEnter={preventDefault}
-            onClick={() => document.getElementById("file-upload")?.click()}
-            onDragLeave={preventDefault}
           >
             <Upload className="h-10 w-10 mx-auto mb-4 text-gray-500 group-hover:text-gray-700 transition-colors" />
             <p className="text-lg font-medium mb-2">

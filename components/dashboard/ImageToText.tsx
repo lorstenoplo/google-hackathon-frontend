@@ -191,12 +191,12 @@ const ImageToText: React.FC = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <Tabs
-          defaultValue="tesseract"
+          defaultValue="gemini"
           onValueChange={(value) => setMethod(value as ExtractionMethod)}
         >
           <TabsList className="grid w-full grid-cols-2 mb-4">
-            <TabsTrigger value="tesseract">Tesseract OCR</TabsTrigger>
             <TabsTrigger value="gemini">Gemini AI</TabsTrigger>
+            <TabsTrigger value="tesseract">Tesseract OCR</TabsTrigger>
           </TabsList>
           <TabsContent value="tesseract">
             <p className="text-sm text-muted-foreground mb-4">
