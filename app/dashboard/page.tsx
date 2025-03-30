@@ -16,12 +16,13 @@ import {
   FileText,
   Image,
   MessageSquare,
-  Upload,
   ArrowLeft,
   CircleHelp,
 } from "lucide-react";
 import Link from "next/link";
 import TextToSpeech from "@/components/dashboard/TextToSpeech";
+import ImageToText from "@/components/dashboard/ImageToText";
+import PDFResumeViewer from "@/components/dashboard/PdfReader";
 
 export default function DashboardPage() {
   return (
@@ -125,113 +126,11 @@ export default function DashboardPage() {
               </TabsContent>
 
               <TabsContent value="pdf-reader" className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <TextSection>
-                      <CardTitle className="text-2xl">PDF Reader</CardTitle>
-                      <CardDescription className="text-base text-spacing">
-                        Upload a PDF file to have it read aloud or converted to
-                        audio.
-                      </CardDescription>
-                    </TextSection>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="border-2 border-dashed rounded-md p-10 text-center group">
-                      <Upload className="h-10 w-10 mx-auto mb-4 text-muted-foreground" />
-                      <TextSection>
-                        <p className="text-lg font-medium mb-2">
-                          Drag and drop your PDF here
-                        </p>
-                        <p className="text-muted-foreground mb-4">or</p>
-                      </TextSection>
-                      <Button className="group flex items-center">
-                        Browse Files
-                        <TextToSpeechButton
-                          text="Browse Files"
-                          className="ml-2"
-                          showOnHover
-                        />
-                      </Button>
-                    </div>
-                    <div className="flex justify-between">
-                      <Button disabled className="group flex items-center">
-                        Read PDF Aloud
-                        <TextToSpeechButton
-                          text="Read PDF Aloud"
-                          className="ml-2"
-                          showOnHover
-                        />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        disabled
-                        className="group flex items-center"
-                      >
-                        Download Audio
-                        <TextToSpeechButton
-                          text="Download Audio"
-                          className="ml-2"
-                          showOnHover
-                        />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <PDFResumeViewer />
               </TabsContent>
 
               <TabsContent value="image-to-text" className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <TextSection>
-                      <CardTitle className="text-2xl">Image to Text</CardTitle>
-                      <CardDescription className="text-base text-spacing">
-                        Upload an image containing text to extract and convert
-                        it to readable text.
-                      </CardDescription>
-                    </TextSection>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="border-2 border-dashed rounded-md p-10 text-center group">
-                      <Upload className="h-10 w-10 mx-auto mb-4 text-muted-foreground" />
-                      <TextSection>
-                        <p className="text-lg font-medium mb-2">
-                          Drag and drop your image here
-                        </p>
-                        <p className="text-muted-foreground mb-4">or</p>
-                      </TextSection>
-                      <Button className="group flex items-center">
-                        Browse Files
-                        <TextToSpeechButton
-                          text="Browse Files"
-                          className="ml-2"
-                          showOnHover
-                        />
-                      </Button>
-                    </div>
-                    <div className="flex justify-between">
-                      <Button disabled className="group flex items-center">
-                        Extract Text
-                        <TextToSpeechButton
-                          text="Extract Text"
-                          className="ml-2"
-                          showOnHover
-                        />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        disabled
-                        className="group flex items-center"
-                      >
-                        Read Extracted Text
-                        <TextToSpeechButton
-                          text="Read Extracted Text"
-                          className="ml-2"
-                          showOnHover
-                        />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <ImageToText />
               </TabsContent>
 
               <TabsContent value="spelling-helper" className="space-y-6">

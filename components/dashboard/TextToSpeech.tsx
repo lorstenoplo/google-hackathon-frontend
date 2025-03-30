@@ -147,7 +147,7 @@ const TextToSpeech = () => {
 
   return (
     <Card className="shadow-lg">
-      <CardHeader className="bg-slate-50 rounded-t-lg">
+      <CardHeader>
         <TextSection>
           <CardTitle className="text-2xl font-bold text-slate-800">
             Text to Speech
@@ -193,10 +193,10 @@ const TextToSpeech = () => {
           <Button
             onClick={handleDownloadAudio}
             variant="outline"
-            className={`flex items-center justify-center gap-2 py-2 px-4 border border-slate-300 text-slate-700 hover:bg-slate-100 rounded-md transition-colors ${
+            className={`flex items-center justify-center gap-2 py-2 px-4 border border-slate-300 text-slate-700 hover:bg-slate-100 rounded-md transition-colors disabled:cursor-not-allowed ${
               !audioUrl ? "cursor-not-allowed opacity-50" : "cursor-pointer"
             }`}
-            disabled={!audioUrl}
+            disabled={!audioUrl || isLoading}
           >
             <Download className="h-5 w-5" />
             <span>Download Audio</span>
@@ -209,7 +209,7 @@ const TextToSpeech = () => {
           </div>
         )}
       </CardContent>
-      <Toaster position="bottom-center" />
+      <Toaster position="bottom-right" />
     </Card>
   );
 };
