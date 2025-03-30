@@ -17,7 +17,7 @@ import {
 import { Button } from "../ui/button";
 import { Upload, Download, Copy, Check } from "lucide-react";
 import { Toaster, toast } from "react-hot-toast";
-import Image from "next/image";
+import "katex/dist/katex.min.css"; // Import KaTeX CSS
 
 // Define the API response types
 interface PDFApiResponse {
@@ -104,6 +104,28 @@ export default function PDFMarkdownViewer() {
       }
 
       const response: PDFApiResponse = await res.json();
+
+      // Pre-process markdown to fix common issues
+      if (response?.response_dict?.pages) {
+        response.response_dict.pages = response.response_dict.pages.map(
+          (page) => {
+            // Fix potential table formatting issues
+            let processedMarkdown = page.markdown || "";
+
+            // Ensure proper spacing in tables and math notation
+            processedMarkdown = processedMarkdown.replace(
+              /\|\s*(\$[^$]+\$)\s*\|/g,
+              "| $1 |"
+            );
+
+            return {
+              ...page,
+              markdown: processedMarkdown,
+            };
+          }
+        );
+      }
+
       setPdfData(response);
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -209,6 +231,8 @@ export default function PDFMarkdownViewer() {
             onDrop={handleDrop}
             onDragOver={preventDefault}
             onDragEnter={preventDefault}
+            onClick={() => document.getElementById("file-upload")?.click()}
+            onDragLeave={preventDefault}
           >
             <Upload className="h-10 w-10 mx-auto mb-4 text-gray-500 group-hover:text-gray-700 transition-colors" />
             <p className="text-lg font-medium mb-2">
@@ -276,7 +300,67 @@ export default function PDFMarkdownViewer() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="markdown-content p-4 bg-gray-50 border rounded-lg font-opendyslexic">
+            <div className="markdown-content p-6 bg-gray-50 border rounded-lg font-opendyslexic">
+              <style jsx global>{`
+                .markdown-content {
+                  line-height: 1.8;
+                  color: rgba(0, 0, 0, 0.8);
+                }
+                .markdown-content p {
+                  margin-bottom: 1rem;
+                }
+                .markdown-content h1,
+                .markdown-content h2,
+                .markdown-content h3,
+                .markdown-content h4,
+                .markdown-content h5 {
+                  margin-top: 1.5rem;
+                  margin-bottom: 1rem;
+                }
+                .markdown-content table {
+                  border-collapse: separate;
+                  border-spacing: 0;
+                  width: 100%;
+                  margin: 1.5rem 0;
+                }
+                .markdown-content th,
+                .markdown-content td {
+                  padding: 0.75rem 1rem;
+                  text-align: left;
+                  border: 1px solid #e5e7eb;
+                }
+                .markdown-content th {
+                  background-color: #f9fafb;
+                  font-weight: 600;
+                }
+                .markdown-content tr:nth-child(even) {
+                  background-color: #f3f4f6;
+                }
+                .markdown-content .katex {
+                  font-size: 1.1em;
+                }
+                .markdown-content ul,
+                .markdown-content ol {
+                  margin-bottom: 1rem;
+                  padding-left: 1.5rem;
+                }
+                .markdown-content li {
+                  margin-bottom: 0.5rem;
+                }
+                .markdown-content blockquote {
+                  margin: 1rem 0;
+                  padding: 0.5rem 1rem;
+                  border-left: 4px solid #9ca3af;
+                  background-color: #f3f4f6;
+                }
+                .markdown-content pre {
+                  margin: 1rem 0;
+                  padding: 1rem;
+                  background-color: #f3f4f6;
+                  border-radius: 0.375rem;
+                  overflow-x: auto;
+                }
+              `}</style>
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeRaw, rehypeKatex]}
@@ -314,7 +398,7 @@ export default function PDFMarkdownViewer() {
                         <img
                           src={base64Src}
                           alt={alt || ""}
-                          className="max-w-full h-auto rounded shadow-sm my-3 mx-auto block"
+                          className="max-w-full h-auto rounded shadow-sm my-4 mx-auto block"
                         />
                       );
                     }
@@ -323,16 +407,23 @@ export default function PDFMarkdownViewer() {
                       <img
                         src={src || ""}
                         alt={alt || ""}
-                        className="max-w-full h-auto rounded shadow-sm my-3 mx-auto block"
+                        className="max-w-full h-auto rounded shadow-sm my-4 mx-auto block"
                       />
                     );
                   },
                   code: ({
                     node,
+                    inline,
+                    className,
                     children,
                     ...props
-                  }: MarkdownComponentProps) => (
-                    <code {...props} className="bg-gray-200 p-1 rounded">
+                  }: MarkdownComponentProps & { inline?: boolean }) => (
+                    <code
+                      className={
+                        inline ? "bg-gray-200 px-1 py-0.5 rounded" : className
+                      }
+                      {...props}
+                    >
                       {children}
                     </code>
                   ),
@@ -343,7 +434,7 @@ export default function PDFMarkdownViewer() {
                   }: MarkdownComponentProps) => (
                     <pre
                       {...props}
-                      className="bg-gray-200 p-2 rounded overflow-x-auto"
+                      className="bg-gray-200 p-4 rounded-md overflow-x-auto my-4"
                     >
                       {children}
                     </pre>
@@ -355,7 +446,7 @@ export default function PDFMarkdownViewer() {
                   }: MarkdownComponentProps) => (
                     <blockquote
                       {...props}
-                      className="border-l-4 border-gray-400 pl-4 italic"
+                      className="border-l-4 border-gray-400 pl-4 italic my-4"
                     >
                       {children}
                     </blockquote>
@@ -365,23 +456,73 @@ export default function PDFMarkdownViewer() {
                     children,
                     ...props
                   }: MarkdownComponentProps) => (
-                    <h1 {...props} className="text-2xl font-bold mb-2">
+                    <h1 {...props} className="text-2xl font-bold mt-6 mb-4">
                       {children}
                     </h1>
+                  ),
+                  h2: ({
+                    node,
+                    children,
+                    ...props
+                  }: MarkdownComponentProps) => (
+                    <h2 {...props} className="text-xl font-bold mt-5 mb-3">
+                      {children}
+                    </h2>
+                  ),
+                  h3: ({
+                    node,
+                    children,
+                    ...props
+                  }: MarkdownComponentProps) => (
+                    <h3 {...props} className="text-lg font-bold mt-4 mb-2">
+                      {children}
+                    </h3>
+                  ),
+                  p: ({ node, children, ...props }: MarkdownComponentProps) => (
+                    <p {...props} className="mb-4 leading-relaxed">
+                      {children}
+                    </p>
                   ),
                   table: ({
                     node,
                     children,
                     ...props
                   }: MarkdownComponentProps) => (
-                    <div className="overflow-x-auto my-4">
+                    <div className="overflow-x-auto my-6">
                       <table
-                        className="min-w-full border border-gray-300"
+                        className="min-w-full border border-gray-300 rounded-md"
                         {...props}
                       >
                         {children}
                       </table>
                     </div>
+                  ),
+                  thead: ({
+                    node,
+                    children,
+                    ...props
+                  }: MarkdownComponentProps) => (
+                    <thead className="bg-gray-100" {...props}>
+                      {children}
+                    </thead>
+                  ),
+                  tbody: ({
+                    node,
+                    children,
+                    ...props
+                  }: MarkdownComponentProps) => (
+                    <tbody className="divide-y divide-gray-200" {...props}>
+                      {children}
+                    </tbody>
+                  ),
+                  tr: ({
+                    node,
+                    children,
+                    ...props
+                  }: MarkdownComponentProps) => (
+                    <tr className="hover:bg-gray-50" {...props}>
+                      {children}
+                    </tr>
                   ),
                   th: ({
                     node,
@@ -389,7 +530,7 @@ export default function PDFMarkdownViewer() {
                     ...props
                   }: MarkdownComponentProps) => (
                     <th
-                      className="border border-gray-300 px-4 py-2 bg-gray-100"
+                      className="border border-gray-300 px-4 py-3 bg-gray-100 font-semibold"
                       {...props}
                     >
                       {children}
@@ -400,9 +541,36 @@ export default function PDFMarkdownViewer() {
                     children,
                     ...props
                   }: MarkdownComponentProps) => (
-                    <td className="border border-gray-300 px-4 py-2" {...props}>
+                    <td className="border border-gray-300 px-4 py-3" {...props}>
                       {children}
                     </td>
+                  ),
+                  ul: ({
+                    node,
+                    children,
+                    ...props
+                  }: MarkdownComponentProps) => (
+                    <ul className="list-disc pl-6 mb-4 space-y-2" {...props}>
+                      {children}
+                    </ul>
+                  ),
+                  ol: ({
+                    node,
+                    children,
+                    ...props
+                  }: MarkdownComponentProps) => (
+                    <ol className="list-decimal pl-6 mb-4 space-y-2" {...props}>
+                      {children}
+                    </ol>
+                  ),
+                  li: ({
+                    node,
+                    children,
+                    ...props
+                  }: MarkdownComponentProps) => (
+                    <li className="mb-1" {...props}>
+                      {children}
+                    </li>
                   ),
                 }}
               >

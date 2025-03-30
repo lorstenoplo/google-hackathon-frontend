@@ -1,13 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextToSpeechButton } from "@/components/text-to-speech-button";
 import { TextSection } from "@/components/text-section";
@@ -23,6 +16,7 @@ import Link from "next/link";
 import TextToSpeech from "@/components/dashboard/TextToSpeech";
 import ImageToText from "@/components/dashboard/ImageToText";
 import PDFResumeViewer from "@/components/dashboard/PdfReader";
+import SpellingHelper from "@/components/dashboard/SpellingHelper";
 
 export default function DashboardPage() {
   return (
@@ -134,45 +128,7 @@ export default function DashboardPage() {
               </TabsContent>
 
               <TabsContent value="spelling-helper" className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <TextSection>
-                      <CardTitle className="text-2xl">
-                        Spelling Helper
-                      </CardTitle>
-                      <CardDescription className="text-base text-spacing">
-                        Enter text to get spelling corrections and improvements.
-                      </CardDescription>
-                    </TextSection>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <textarea
-                      className="w-full min-h-[200px] p-4 rounded-md border text-spacing text-lg"
-                      placeholder="Enter your text here for spelling and grammar suggestions..."
-                    ></textarea>
-                    <div className="flex justify-between">
-                      <Button className="group flex items-center">
-                        Check Spelling
-                        <TextToSpeechButton
-                          text="Check Spelling"
-                          className="ml-2"
-                          showOnHover
-                        />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="group flex items-center"
-                      >
-                        Improve Text
-                        <TextToSpeechButton
-                          text="Improve Text"
-                          className="ml-2"
-                          showOnHover
-                        />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <SpellingHelper />
               </TabsContent>
             </Tabs>
           </div>
