@@ -28,10 +28,7 @@ const TextToSpeech = () => {
     const audio = new Audio();
     audio.onplay = () => setIsPlaying(true);
     audio.onpause = () => setIsPlaying(false);
-    audio.onended = () => {
-      setIsPlaying(false);
-      setAudioUrl(null);
-    };
+    audio.onended = () => setIsPlaying(false);
     audio.onerror = (e) => {
       // Only show error if we're actually trying to play something
       if (audioInitialized.current) {
