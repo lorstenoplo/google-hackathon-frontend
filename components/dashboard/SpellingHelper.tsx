@@ -80,7 +80,7 @@ const SpellingHelper = () => {
     <Card className="w-full">
       <CardHeader>
         <TextSection>
-          <CardTitle className="text-2xl">Spelling Helper</CardTitle>
+          <CardTitle className="text-2xl">Spell Checker</CardTitle>
           <CardDescription className="text-base text-spacing">
             Enter text to get spelling and grammar corrections.
           </CardDescription>

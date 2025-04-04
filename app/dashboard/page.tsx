@@ -106,9 +106,9 @@ export default function DashboardPage() {
                   className="flex items-center gap-2 py-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground group"
                 >
                   <MessageSquare className="h-5 w-5" />
-                  <span>Spelling Helper</span>
+                  <span>Spell Checker</span>
                   <TextToSpeechButton
-                    text="Spelling Helper"
+                    text="Spell Checker"
                     className="ml-1"
                     showOnHover
                   />

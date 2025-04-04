@@ -2,9 +2,9 @@ import type React from "react";
 import "./globals.css";
 
 export const metadata = {
-  title: "ReadEase - Tools for Dyslexic Readers",
+  title: "ReadEase - Tools for Dyslexic Users",
   description:
-    "Text-to-speech, PDF reading, image-to-text and spelling tools for dyslexic readers",
+    "Text-to-speech, PDF reading, image-to-text and spelling tools for dyslexic Users",
 };
 
 export default function RootLayout({
