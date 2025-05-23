@@ -119,11 +119,11 @@ export default function Home() {
             <div className="flex flex-col items-center text-center space-y-8">
               <TextSection className="space-y-4 max-w-3xl">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wide text-spacing">
-                  Reading Tools for Dyslexic Readers
+                  Reading Tools for Dyslexic Users
                 </h1>
                 <p className="text-xl md:text-2xl text-muted-foreground text-spacing">
                   Text-to-speech, PDF reading, image-to-text, and spelling tools
-                  designed for dyslexic readers.
+                  designed for dyslexic users.
                 </p>
               </TextSection>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -172,7 +172,7 @@ export default function Home() {
                 icon={Image}
               />
               <FeatureCard
-                title="Spelling Helper"
+                title="Spell Checker"
                 description="Get spelling corrections and text improvements. Enhance your writing with smart suggestions."
                 icon={MessageSquare}
               />
