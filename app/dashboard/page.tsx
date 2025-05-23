@@ -17,6 +17,7 @@ import TextToSpeech from "@/components/dashboard/TextToSpeech";
 import ImageToText from "@/components/dashboard/ImageToText";
 import PDFResumeViewer from "@/components/dashboard/PdfReader";
 import SpellingHelper from "@/components/dashboard/SpellingHelper";
+import VideoSummarization from "@/components/dashboard/VideoSummarization";
 
 export default function DashboardPage() {
   return (
@@ -113,6 +114,18 @@ export default function DashboardPage() {
                     showOnHover
                   />
                 </TabsTrigger>
+                <TabsTrigger
+                  value="video-summarization"
+                  className="flex items-center gap-2 py-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground group"
+                >
+                  <MessageSquare className="h-5 w-5" />
+                  <span>Video Summarization</span>
+                  <TextToSpeechButton
+                    text="Video Summarization"
+                    className="ml-1"
+                    showOnHover
+                  />
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="text-to-speech" className="space-y-6">
@@ -129,6 +142,10 @@ export default function DashboardPage() {
 
               <TabsContent value="spelling-helper" className="space-y-6">
                 <SpellingHelper />
+              </TabsContent>
+
+              <TabsContent value="video-summarization" className="space-y-6">
+                <VideoSummarization />
               </TabsContent>
             </Tabs>
           </div>
