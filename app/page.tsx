@@ -119,11 +119,11 @@ export default function Home() {
             <div className="flex flex-col items-center text-center space-y-8">
               <TextSection className="space-y-4 max-w-3xl">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wide text-spacing">
-                  Reading Tools for Dyslexic Users
+                  Reading Tools Made accessible for Everyone
                 </h1>
                 <p className="text-xl md:text-2xl text-muted-foreground text-spacing">
                   Text-to-speech, PDF reading, image-to-text, and spelling tools
-                  designed for dyslexic users.
+                  designed for all users.
                 </p>
               </TextSection>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -203,7 +203,7 @@ export default function Home() {
                 <TextSection>
                   <h3 className="text-xl font-bold">Choose a Tool</h3>
                   <p className="text-spacing">
-                    Select from our range of tools designed for dyslexic
+                    Select from our range of tools designed for all
                     readers.
                   </p>
                 </TextSection>
