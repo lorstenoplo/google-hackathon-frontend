@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import Extension from "@/components/landing-page/extension";
 
 export default function Home() {
   // Navigation items
@@ -142,6 +143,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Extension Section */}
+        <Extension />
 
         {/* Features Section */}
         <section ref={featuresRef} id="features" className="py-16 md:py-24">
